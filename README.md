@@ -54,7 +54,5 @@ A fully functional **full-stack e-commerce web application** built using the **M
 - Clean, minimal design  
 - Toast notifications for better UX  
 
----
 
-## 📁 Project Structure
 
