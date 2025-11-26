@@ -36,18 +36,7 @@ Users can **create an account**, **log in**, **browse products**, **search**, an
 | Routing          | react-router-dom         |
 | API              | Platzi Fake Store API    |
 | State Management | React Hooks              |
-| Upcoming         | localStorage Cart        |
+| cart             | localStorage Cart        |
 
----
-
-## 🔗 Platzi Fake Store API
-
-This project integrates the official **Platzi Fake Store API**.  
-Used endpoints include:
-
-- `POST /users` – User registration
-- `POST /auth/login` – Login - receive access token & refresh token
-- `GET /products` – Fetch all products
-- `GET /categories` – Fetch categories
 
 ---
