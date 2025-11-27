@@ -52,7 +52,7 @@ A fully functional **full-stack e-commerce web application** built using the **M
 ### **💎 UI/UX**
 - Responsive layout using Tailwind CSS  
 - Clean, minimal design  
-- Toast notifications for better UX  
+- React-Toastify - Toast notifications for better UX  
 
 
 
