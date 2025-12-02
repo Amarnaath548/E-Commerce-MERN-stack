@@ -4,9 +4,11 @@ import {
   acessTokenGenerator,
   refreshTokenGenerator,
 } from "../utils/generateToken.js";
+import { uploadImage } from "../utils/upload.js";
 
 export const register = asyncHandler(async (req, res) => {
-  const { name, email, password, avatar } = req.body;
+  const { name, email, password} = req.body;
+ const  avatar= await uploadImage(req);
   const existingUser = await User.findOne({ email });
   if (existingUser) {
     res.status(400);

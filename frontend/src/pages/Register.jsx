@@ -7,17 +7,18 @@ function Register() {
     name: "",
     email: "",
     password: "",
-    avatar:
-      "https://placehold.co/150x100/png?text=Profile+Image&font=roboto",
+    avatar: null,
   });
 
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   const [formError, setFormError] = useState({
     name: "",
     email: "",
     password: "",
   });
+
+  const [loading,setLoading]=useState(false);
 
   const validation = () => {
     const errors = { name: "", email: "", password: "" };
@@ -32,38 +33,46 @@ function Register() {
   };
 
   const register = async () => {
-    try {
+    const formData = new FormData();
+
+    formData.append("name", form.name);
+    formData.append("email", form.email);
+    formData.append("password", form.password);
+
+    if (form.avatar) {
+      formData.append("avatar", form.avatar);
+    }
+    
       const { data } = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/auth/register`,
-        form
+        formData
       );
-      console.log(form)
+      console.log(form);
       console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
+    
   };
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
+    setLoading(true);
     e.preventDefault();
-    if (validation()) {
-      register();
-      navigate("/login")
-
-    };
+    try {
+      if (validation()) {
+        await register();
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log(error);
+    }finally{
+      setLoading(false);
+    }
   }
 
   return (
-   <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
       <div className="w-full max-w-md bg-white shadow-xl rounded-2xl p-8 space-y-6">
-        
-        <h2 className="text-2xl sm:text-3xl font-bold text-center">
-          Register
-        </h2>
+        <h2 className="text-2xl sm:text-3xl font-bold text-center">Register</h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          
-          {/* NAME */}
           <div>
             <label htmlFor="name" className="block mb-1 font-medium">
               Name
@@ -81,7 +90,6 @@ function Register() {
             )}
           </div>
 
-          {/* EMAIL */}
           <div>
             <label htmlFor="email" className="block mb-1 font-medium">
               Email
@@ -99,7 +107,6 @@ function Register() {
             )}
           </div>
 
-          {/* PASSWORD */}
           <div>
             <label htmlFor="password" className="block mb-1 font-medium">
               Password
@@ -117,31 +124,29 @@ function Register() {
             )}
           </div>
 
-          {/* PROFILE */}
           <div>
-            <label htmlFor="profile" className="block mb-1 font-medium">
-              Profile Image URL
+            <label htmlFor="image" className="form-label">
+              Profile image
             </label>
+
             <input
-              type="url"
-              id="profile"
-              value={form.avatar}
-              onChange={(e) => setForm({ ...form, avatar: e.target.value })}
+              type="file"
+              accept="image/*"
+              onChange={(e) => setForm({ ...form, avatar: e.target.files[0] })}
               className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter image URL"
+              id="image"
             />
           </div>
 
-          {/* BUTTON */}
           <button
+            disabled={loading}
             type="submit"
             className="w-full bg-blue-600 text-white p-3 rounded-xl text-lg font-semibold hover:bg-blue-700 active:scale-95 transition"
           >
-            Register
+          {loading? "Registering please wait..." :"Register"}
           </button>
         </form>
 
-        {/* LOGIN LINK */}
         <p className="text-center text-gray-600 text-sm sm:text-base">
           Already have an account?{" "}
           <Link
@@ -151,7 +156,6 @@ function Register() {
             Login
           </Link>
         </p>
-
       </div>
     </div>
   );

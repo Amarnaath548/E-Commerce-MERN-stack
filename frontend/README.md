@@ -9,7 +9,7 @@ Users can **create an account**, **log in**, **browse products**, **search**, an
 
 ### 👤 User Authentication
 
-- Create a new user using Platzi Fake Store API
+- Create a new user
 - Login with email & password
 - Receive an `access_token` for authentication
 - Token is used for protected API calls
@@ -37,17 +37,5 @@ Users can **create an account**, **log in**, **browse products**, **search**, an
 | API              | Platzi Fake Store API    |
 | State Management | React Hooks              |
 | Upcoming         | localStorage Cart        |
-
----
-
-## 🔗 Platzi Fake Store API
-
-This project integrates the official **Platzi Fake Store API**.  
-Used endpoints include:
-
-- `POST /users` – User registration
-- `POST /auth/login` – Login - receive access token & refresh token
-- `GET /products` – Fetch all products
-- `GET /categories` – Fetch categories
 
 ---

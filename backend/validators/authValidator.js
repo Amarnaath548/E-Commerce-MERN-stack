@@ -11,8 +11,12 @@ export const registerValidator = [
         .trim().notEmpty().withMessage("Password is required")
         .isLength({ min: 6 }).withMessage("Password must be at least 6 characters long"),
     body("avatar")
-        .trim().notEmpty().withMessage("Avatar is required")
-        .isURL().withMessage("Avatar must be a valid URL"),
+    .custom((value, { req }) => {
+        if (!req.file) {
+            throw new Error('Avatar image is required');
+        }
+        return true;
+    }),
 ];
 
 export const loginValidator = [

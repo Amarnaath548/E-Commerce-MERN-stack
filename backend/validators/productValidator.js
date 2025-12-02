@@ -26,11 +26,10 @@ export const productValidator = [
     .isMongoId()
     .withMessage("Invalid Category ID"),
   body("images")
-    .isArray({ min: 1 })
-    .withMessage("At least one image is required"),
-  body("images.*")
-    .notEmpty()
-    .withMessage("Image URL cannot be empty")
-    .isURL()
-    .withMessage("Each image must be a valid URL"),
+    .custom((value, { req }) => {
+      if (!req.files || req.files.length === 0) {
+        throw new Error("At least one product image is required");
+      }
+      return true;
+    }),
 ];

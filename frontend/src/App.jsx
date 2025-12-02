@@ -11,8 +11,11 @@ import Login from "./pages/Login";
 import CartContainer from "./container/CartContainer";
 import NotFound from "./pages/NotFound";
 import ErrorPage from "./pages/ErrorPage";
+import Admin from "./pages/Admin";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CreateProduct from "./pages/CreateProduct";
+import Footer from "./components/Footer";
 
 const App = () => {
   const { user } = use(AuthContext);
@@ -21,7 +24,7 @@ const App = () => {
     <>
       <ToastContainer position="top-right" autoClose={2000} theme="colored" />
       <Navbar />
-      <main>
+      <main className="pt-40 md:pt-20 pb-10 min-h-[calc(100vh-5rem)]">
         <Routes>
           <Route
             path="/"
@@ -62,9 +65,27 @@ const App = () => {
             element={user ? <CartContainer /> : <Navigate to="/login" />}
             errorElement={<ErrorPage />}
           />
+          <Route
+            path="/admin"
+            element={
+              user && user.role === "admin" ? <Admin /> : <Navigate to="/" />
+            }
+            errorElement={<ErrorPage />}
+          />
+          <Route
+            path="/products/create"
+            element={
+              user && user.role === "admin" ? (
+                <CreateProduct />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
+      <Footer/>
     </>
   );
 };

@@ -5,17 +5,18 @@ import {
   getProfile,
   logout,
   getTokensUsingRefreshToken,
-} from "../controller/AuthController.js";
+} from "../controller/authController.js";
 import { protect, refreshProtect } from "../middleware/authMiddleware.js";
 import {
   registerValidator,
   loginValidator,
 } from "../validators/authValidator.js";
 import { validateRequest } from "../middleware/validateRequest.js";
+import upload from "../config/multer.js";
 
 const authRouter = express.Router();
 
-authRouter.post("/register", registerValidator, validateRequest, register);
+authRouter.post("/register",upload.single("avatar"), registerValidator, validateRequest, register);
 
 authRouter.post("/login", loginValidator, validateRequest, login);
 

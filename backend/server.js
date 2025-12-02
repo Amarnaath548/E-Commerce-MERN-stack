@@ -33,6 +33,7 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRouter);
 
 app.use("/api/products", productRouter);
+
 app.use("/api/categories", categoryRouter);
 
 app.use(errorHandler);

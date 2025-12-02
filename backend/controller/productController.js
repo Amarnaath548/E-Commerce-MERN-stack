@@ -1,8 +1,17 @@
 import asyncHandler from "express-async-handler";
 import Product from "../model/Product.js";
+import { uploadMultipleImages } from "../utils/upload.js";
+import User from "../model/User.js";
 
 export const createProduct = asyncHandler(async (req, res) => {
-  const { title, price, description, category, images } = req.body;
+  const user = await User.findById(req.user.id);
+  const isAdmin = user.role==="admin";
+  if (!isAdmin) {
+    res.status(403);
+    throw new Error("Only admins can create products");
+  }
+  const { title, price, description, category} = req.body;
+  const images= await uploadMultipleImages(req)
   const product = new Product({ title, price, description, category, images });
   await product.save();
   res.status(201).json(product);
@@ -23,7 +32,14 @@ export const getProductById = asyncHandler(async (req, res) => {
 });
 
 export const updateProduct = asyncHandler(async (req, res) => {
-  const { title, price, description, category, images } = req.body;
+  const user = await User.findById(req.user.id);
+  const isAdmin = user.role==="admin";
+  if (!isAdmin || !isAdmin.isAdmin) {
+    res.status(403);
+    throw new Error("Only admins can update products");
+  }
+  const { title, price, description, category} = req.body;
+  const images= await uploadMultipleImages(req)
   const product = await Product.findByIdAndUpdate(
     req.params.id,
     { title, price, description, category, images },
@@ -61,6 +77,8 @@ export const deleteProduct = asyncHandler(async (req, res) => {
 //   res.status(200).json(products);
 // });
 
+
+//----Filter,Search,sort by price,category,title
 export const paginateProducts = asyncHandler(async (req, res) => {
   const offset = parseInt(req.query.offset) || 0;
 
@@ -79,10 +97,9 @@ export const paginateProducts = asyncHandler(async (req, res) => {
   let priceFilter = {};
 
   if (!isNaN(price)) {
-    // 1. Exact price match (using $eq)
+    
     priceFilter = { price: { $eq: price } };
   } else if (!isNaN(priceMin) || !isNaN(priceMax)) {
-    // 2. Otherwise, check for range (using $gte/$lte)
     priceFilter.price = {};
     if (!isNaN(priceMin)) {
       priceFilter.price.$gte = priceMin;

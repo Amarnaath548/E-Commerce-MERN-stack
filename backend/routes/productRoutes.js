@@ -10,12 +10,13 @@ import {
 import { protect } from "../middleware/authMiddleware.js";
 import { productValidator } from "../validators/productValidator.js";
 import { validateRequest } from "../middleware/validateRequest.js";
+import upload from "../config/multer.js";
 
 const productRouter = express.Router();
 
-productRouter.post("/", protect,productValidator,validateRequest, createProduct);
+productRouter.post("/",upload.array("images", 5), protect,productValidator,validateRequest, createProduct);
 
-productRouter.put("/:id", protect,productValidator,validateRequest, updateProduct);
+productRouter.put("/:id",upload.array("images", 5), protect,productValidator,validateRequest, updateProduct);
 
 productRouter.delete("/:id", protect, deleteProduct);
 
