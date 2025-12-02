@@ -1,4 +1,4 @@
-# 📦 E-Commerce (React + Platzi Fake Store API)
+# 📦 E-Commerce
 
 A modern and simple E-Commerce web application built using **React**, **Vite**, **TailwindCSS**.  
 Users can **create an account**, **log in**, **browse products**, **search**, and **filter** by category and price.  
@@ -34,8 +34,7 @@ Users can **create an account**, **log in**, **browse products**, **search**, an
 | ---------------- | ------------------------ |
 | Frontend         | React, Vite, TailwindCSS |
 | Routing          | react-router-dom         |
-| API              | Platzi Fake Store API    |
 | State Management | React Hooks              |
-| Upcoming         | localStorage Cart        |
+| cart             | localStorage Cart        |
 
 ---
