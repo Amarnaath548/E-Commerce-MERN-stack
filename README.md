@@ -39,7 +39,6 @@ A fully functional **full-stack e-commerce web application** built using the **M
 - Single product details page  
 - Add to cart / remove from cart  
 - Cart persistence  
-- Order creation (if implemented)  
 
 ### **⚙️ Backend System**
 - RESTful API  
