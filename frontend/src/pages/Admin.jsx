@@ -10,7 +10,7 @@ const Admin = () => {
           Welcome to the Admin Dashboard. Features coming soon.
         </p>
         <Link
-          className="p-3 border rounded-xl font-semibold hover:text-white hover:bg-blue-700"
+          className="p-3 border rounded-xl font-semibold hover:text-white hover:bg-blue-700 active:scale-95 transition"
           to="/products/create"
         >
           Add a new Product
