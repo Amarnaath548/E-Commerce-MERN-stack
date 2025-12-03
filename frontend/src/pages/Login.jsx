@@ -9,6 +9,7 @@ function Login() {
     email: "",
     password: "",
   });
+  const [loading,setLoading]=useState(false)
   const [formError, setFormError] = useState({ email: "", password: "" });
 
   const {login}=useContext(AuthContext)
@@ -30,13 +31,19 @@ function Login() {
 };
 
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    if (validation()) {
-      console.log(form);
-      login(form)
-      
+    try {
+      if (validation()) {
+      setLoading(true)
+       login(form)
     }
+    } catch (error) {
+      console.log(error)
+    }finally{
+      setLoading(false)
+    }
+    
   }
 
   return (
@@ -85,7 +92,7 @@ function Login() {
             type="submit"
             className="w-full bg-blue-600 text-white p-3 rounded-xl text-lg font-semibold hover:bg-blue-700 transition-all"
           >
-            Login
+            {loading?"verifying, please wait...":"Login"}
           </button>
         </form>
 
