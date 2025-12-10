@@ -12,7 +12,7 @@ const Navbar = () => {
           to="/"
           className="text-2xl font-extrabold text-white hover:text-gray-100 transition duration-150"
         >
-          FACK STORE
+          FAKE STORE
         </Link>
       </div>
 
